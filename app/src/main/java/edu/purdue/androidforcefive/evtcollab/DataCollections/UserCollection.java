@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import edu.purdue.androidforcefive.evtcollab.BusinessObjects.User;
-import edu.purdue.androidforcefive.evtcollab.DataAccess.SuperDataAccess;
+import edu.purdue.androidforcefive.evtcollab.DataAccess.AsyncApiAccess;
 import edu.purdue.androidforcefive.evtcollab.DataAccess.Enums.RestMethod;
 import edu.purdue.androidforcefive.evtcollab.DataAccess.Interfaces.IAsyncResponse;
 import edu.purdue.androidforcefive.evtcollab.DataAccess.RestCommand;
@@ -21,7 +21,7 @@ public class UserCollection implements IAsyncResponse<RestCommand> {
 
     private List<User> users;
     private List<IDataCollection> delegates = new ArrayList<>();
-    // private final SuperDataAccess asyncRestAccess;
+    // private final AsyncApiAccess asyncRestAccess;
     private RestCommand currentCommand;
 
 
@@ -39,7 +39,7 @@ public class UserCollection implements IAsyncResponse<RestCommand> {
      * Private constructor as this class is a singleton
      */
     private UserCollection() {
-        //asyncRestAccess = new SuperDataAccess(this);
+        //asyncRestAccess = new AsyncApiAccess(this);
     }
 
     public List<User> getUsers() {
@@ -68,8 +68,8 @@ public class UserCollection implements IAsyncResponse<RestCommand> {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        SuperDataAccess superDataAccess1 = new SuperDataAccess(this);
-        superDataAccess1.execute(new RestCommand(RestMethod.CREATE, ApiUrl + "v" + ApiVersion + "/users", userJson.toString()));
+        AsyncApiAccess asyncApiAccess1 = new AsyncApiAccess(this);
+        asyncApiAccess1.execute(new RestCommand(RestMethod.CREATE, ApiUrl + "v" + ApiVersion + "/users", userJson.toString()));
     }
 
 
@@ -79,15 +79,15 @@ public class UserCollection implements IAsyncResponse<RestCommand> {
     }
 
     public void refreshUsers() {
-        SuperDataAccess superDataAccess = new SuperDataAccess(this);
-        superDataAccess.execute(new RestCommand(RestMethod.INDEX, ApiUrl + "v" + ApiVersion + "/users"));
+        AsyncApiAccess asyncApiAccess = new AsyncApiAccess(this);
+        asyncApiAccess.execute(new RestCommand(RestMethod.INDEX, ApiUrl + "v" + ApiVersion + "/users"));
     }
 
     public void destroyUser(User user) {
-        SuperDataAccess superDataAccess = new SuperDataAccess(this);
+        AsyncApiAccess asyncApiAccess = new AsyncApiAccess(this);
         RestCommand restCommand = new RestCommand(RestMethod.DELETE, ApiUrl + "v" + ApiVersion + "/users/" + user.getId());
         restCommand.setResult(user);
-        superDataAccess.execute(restCommand);
+        asyncApiAccess.execute(restCommand);
     }
 
     public void updateUser(User user) {
@@ -101,9 +101,9 @@ public class UserCollection implements IAsyncResponse<RestCommand> {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        SuperDataAccess superDataAccess = new SuperDataAccess(this);
+        AsyncApiAccess asyncApiAccess = new AsyncApiAccess(this);
         RestCommand restCommand = new RestCommand(RestMethod.UPDATE, ApiUrl + "v" + ApiVersion + "/users/" + user.getId(),  userJson.toString());
-        superDataAccess.execute(restCommand);
+        asyncApiAccess.execute(restCommand);
     }
 
     public void addListener(IDataCollection delegate) {

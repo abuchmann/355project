@@ -15,12 +15,12 @@ import edu.purdue.androidforcefive.evtcollab.DataAccess.Interfaces.IAsyncRespons
 /**
  * Created by abuchmann on 20.11.2015.
  */
-public class SuperDataAccess extends AsyncTask<RestCommand, Void, Void> {
+public class AsyncApiAccess extends AsyncTask<RestCommand, Void, Void> {
     //private URL url;
     private IAsyncResponse delegate;
     private RestCommand restCommand;
 
-    public SuperDataAccess(IAsyncResponse delegate) {
+    public AsyncApiAccess(IAsyncResponse delegate) {
         this.delegate = delegate;
     }
 
