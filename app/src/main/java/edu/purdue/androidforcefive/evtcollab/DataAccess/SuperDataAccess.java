@@ -1,40 +1,108 @@
 package edu.purdue.androidforcefive.evtcollab.DataAccess;
 
-import org.json.JSONArray;
-import org.json.JSONException;
+import android.os.AsyncTask;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
+
+import edu.purdue.androidforcefive.evtcollab.DataAccess.Enums.RestMethod;
+import edu.purdue.androidforcefive.evtcollab.DataAccess.Interfaces.IAsyncResponse;
 
 /**
  * Created by abuchmann on 20.11.2015.
  */
-public class SuperDataAccess {
-    protected URL url;
+public class SuperDataAccess extends AsyncTask<RestCommand, Void, Void> {
+    //private URL url;
+    private IAsyncResponse delegate;
+    private RestCommand restCommand;
 
-    protected JSONArray executeGet(String url) throws MalformedURLException {
-        this.url = new URL(url);
+    public SuperDataAccess(IAsyncResponse delegate) {
+        this.delegate = delegate;
+    }
+
+    @Override
+    protected Void doInBackground(RestCommand... params) {
         try {
-            HttpURLConnection connection = (HttpURLConnection) this.url.openConnection();
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-            StringBuffer jsonString = new StringBuffer(100000);
-            String tmp;
-            while ((tmp = bufferedReader.readLine()) != null)
-                jsonString.append(tmp).append("\n");
-            bufferedReader.close();
-            return new JSONArray(jsonString.toString());
+            restCommand = params[0];
+            URL url = new URL(params[0].getUrl());
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+
+            if(restCommand.getRestMethod() == RestMethod.UPDATE) {
+                connection.setDoOutput(true);
+                connection.setRequestMethod("PUT");
+                connection.setRequestProperty("Content-Type", "application/json");
+
+                OutputStream outputStream = connection.getOutputStream();
+
+                outputStream.write(restCommand.getData().getBytes());
+                outputStream.flush();
+
+                if (connection.getResponseCode() != HttpURLConnection.HTTP_OK) {
+                    throw new RuntimeException("Failed : HTTP error code : "
+                            + connection.getResponseCode());
+                }
+
+            }
+
+            if(restCommand.getRestMethod() == RestMethod.DELETE) {
+                connection.setRequestMethod("DELETE");
+                connection.connect();
+                if (connection.getResponseCode() != HttpURLConnection.HTTP_NO_CONTENT) {
+                    throw new RuntimeException("Failed : HTTP error code : "
+                            + connection.getResponseCode());
+                }
+            }
+            if (restCommand.getRestMethod() == RestMethod.CREATE) {
+                connection.setDoOutput(true);
+                connection.setRequestMethod("POST");
+                connection.setRequestProperty("Content-Type", "application/json");
+
+                OutputStream outputStream = connection.getOutputStream();
+
+                outputStream.write(restCommand.getData().getBytes());
+                outputStream.flush();
+
+                if (connection.getResponseCode() != HttpURLConnection.HTTP_CREATED) {
+                    throw new RuntimeException("Failed : HTTP error code : "
+                            + connection.getResponseCode());
+                }
+            }
+
+            if(restCommand.getRestMethod() == RestMethod.CREATE ||
+                    restCommand.getRestMethod() == RestMethod.INDEX ||
+                    restCommand.getRestMethod() == RestMethod.UPDATE ) {
+
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+
+                String output, jsonString = "";
+                //System.out.println("Output from Server .... \n");
+                while ((output = bufferedReader.readLine()) != null) {
+                    //System.out.println(output);
+                    jsonString += output;
+                }
+
+                restCommand.setResult(jsonString.toString());
+            }
+
+            //JSONObject result = new JSONObject(jsonString);
+            //MainActivity.order.setOrderId(result.getInt("id"));
+            restCommand.setStatusCode(connection.getResponseCode());
+            connection.disconnect();
+
+
         } catch (IOException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
             e.printStackTrace();
         }
 
-        // Return an empty object if nothing came back.
-        return new JSONArray();
+        return null;
     }
 
+    @Override
+    protected void onPostExecute(Void nothing) {
+        delegate.onTaskCompleted(restCommand);
+    }
 }
