@@ -12,6 +12,7 @@ import edu.purdue.androidforcefive.evtcollab.DataAccess.AsyncApiAccess;
 import edu.purdue.androidforcefive.evtcollab.DataAccess.Enums.RestMethod;
 import edu.purdue.androidforcefive.evtcollab.DataAccess.Interfaces.IAsyncResponse;
 import edu.purdue.androidforcefive.evtcollab.DataAccess.RestCommand;
+import edu.purdue.androidforcefive.evtcollab.DataCollections.Interfaces.IDataCollectionChanged;
 
 /**
  * Created by abuchmann on 21.11.2015.
@@ -20,7 +21,7 @@ public class UserCollection implements IAsyncResponse<RestCommand> {
     private static UserCollection instance;
 
     private List<User> users;
-    private List<IDataCollection> delegates = new ArrayList<>();
+    private List<IDataCollectionChanged> delegates = new ArrayList<>();
     // private final AsyncApiAccess asyncRestAccess;
     private RestCommand currentCommand;
 
@@ -106,12 +107,12 @@ public class UserCollection implements IAsyncResponse<RestCommand> {
         asyncApiAccess.execute(restCommand);
     }
 
-    public void addListener(IDataCollection delegate) {
+    public void addListener(IDataCollectionChanged delegate) {
         delegates.add(delegate);
     }
 
     private void notifyListeners() {
-        for (IDataCollection delegate : delegates) {
+        for (IDataCollectionChanged delegate : delegates) {
             delegate.onCollectionChanged();
         }
     }

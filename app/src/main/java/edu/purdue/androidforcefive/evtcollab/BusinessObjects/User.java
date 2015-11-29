@@ -1,22 +1,21 @@
 package edu.purdue.androidforcefive.evtcollab.BusinessObjects;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import edu.purdue.androidforcefive.evtcollab.BusinessObjects.Interfaces.IBusinessObject;
 import edu.purdue.androidforcefive.evtcollab.DataCollections.UserCollection;
 
 /**
  * Created by abuchmann on 20.11.2015.
  */
-public class User implements IBusinessObject{
-    private int id;
+public class User extends SuperItem{
+
     private String firstName;
     private String lastName;
     private String userName;
     private String password;
     private String eMail;
-
-    public User() {
-
-    }
 
     public User(int id, String firstName, String lastName, String userName, String password, String eMail) {
         this.id = id;
@@ -35,9 +34,7 @@ public class User implements IBusinessObject{
         this.eMail = eMail;
     }
 
-    public int getId() {
-        return id;
-    }
+
 
     public String getFirstName() {
         return firstName;
@@ -108,5 +105,22 @@ public class User implements IBusinessObject{
     @Override
     public void destroy() {
         UserCollection.getInstance().destroyUser(this);
+    }
+
+    @Override
+    public boolean contentEquals(Object other) {
+        return false;
+    }
+
+    @Override
+    public void applyJsonObject(JSONObject object) {
+        JSONObject json = new JSONObject();
+
+
+    }
+
+    @Override
+    public JSONObject getItemAsJsonObject() {
+        return null;
     }
 }
