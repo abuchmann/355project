@@ -7,26 +7,29 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-import edu.purdue.androidforcefive.evtcollab.BusinessObjects.Interfaces.IBusinessObject;
 import edu.purdue.androidforcefive.evtcollab.DataCollections.CalendarCollection;
 
 /**
  * Created by abuchmann on 23.11.2015.
  */
 public class Calendar extends SuperItem {
-    private String name;
-    private String description;
-    private List<Integer> members = new ArrayList<>();
+    protected String name;
+    protected String description;
+    protected int ownerId;
+    protected List<Integer> members = new ArrayList<>();
 
-    public Calendar(int id, String name, String description) {
+
+    public Calendar(int id, String name, String description, int ownerId) {
         this.id = id;
         this.name = name;
         this.description = description;
+        this.ownerId = ownerId;
     }
 
-    public Calendar(String name, String description) {
+    public Calendar(String name, String description, int ownerId) {
         this.name = name;
         this.description = description;
+        this.ownerId = ownerId;
     }
 
     public Calendar() {
@@ -40,9 +43,11 @@ public class Calendar extends SuperItem {
     @Override
     public void applyJsonObject(JSONObject object) {
         try {
-            this.setId(object.getInt("id"));
-            this.setName(object.getString("name"));
-            this.setDescription(object.getString("description"));
+            if (object.has("id"))
+                this.id = object.getInt("id");
+            this.name = object.getString("name");
+            this.description = object.getString("description");
+            this.ownerId = object.getInt("owner_id");
             JSONArray users = object.getJSONArray("users");
             for (int i = 0; i < users.length(); i++) {
                 this.addMember(users.getJSONObject(i).getInt("id"));
@@ -54,7 +59,20 @@ public class Calendar extends SuperItem {
 
     @Override
     public JSONObject getItemAsJsonObject() {
-        return null;
+        JSONObject calendarJson = new JSONObject();
+        JSONArray membersJson = new JSONArray();
+        try {
+            for (int member : members) {
+                membersJson.put(new JSONObject().put("id", member));
+            }
+            calendarJson.put("users", membersJson);
+            calendarJson.put("name", name);
+            calendarJson.put("description", description);
+            calendarJson.put("owner_id", ownerId);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return calendarJson;
     }
 
     public void addMember(int id) {
@@ -62,7 +80,7 @@ public class Calendar extends SuperItem {
     }
 
     public void removeMember(int id) {
-        members.remove(id);
+        members.remove(new Integer(id));
     }
 
     public String getName() {
@@ -85,6 +103,18 @@ public class Calendar extends SuperItem {
         this.description = description;
     }
 
+    public List<Integer> getMembers() {
+        return members;
+    }
+
+    public int getOwnerId() {
+        return ownerId;
+    }
+
+    public void setOwnerId(int ownerId) {
+        this.ownerId = ownerId;
+    }
+
     @Override
     public void save() {
         if (id == 0) {
@@ -104,6 +134,17 @@ public class Calendar extends SuperItem {
 
     @Override
     public boolean contentEquals(Object other) {
+        if (this.name.equals(((Calendar) other).getName()) &&
+                this.description.equals(((Calendar) other).getDescription()) &&
+                this.ownerId == ((Calendar) other).getOwnerId() &&
+                this.members.size() == ((Calendar) other).getMembers().size()) {
+            for (int member : members) {
+                if (!((Calendar) other).getMembers().contains(member)) {
+                    return false;
+                }
+            }
+            return true;
+        }
         return false;
     }
 }

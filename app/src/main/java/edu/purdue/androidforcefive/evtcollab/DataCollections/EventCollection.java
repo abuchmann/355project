@@ -27,7 +27,9 @@ public class EventCollection implements IAsyncResponse<RestCommand> {
     private RestCommand currentCommand;
 
 
-    private String ApiUrl = "http://192.168.109.128:3000/api/";
+    // private String ApiUrl = "http://192.168.109.128:3000/api/";
+    private String ApiUrl = "http://agglo.mooo.com:4000/api/";
+
     private int ApiVersion = 1;
 
     public static EventCollection getInstance() {

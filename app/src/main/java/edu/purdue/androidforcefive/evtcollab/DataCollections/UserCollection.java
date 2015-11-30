@@ -26,7 +26,9 @@ public class UserCollection implements IAsyncResponse<RestCommand> {
     private RestCommand currentCommand;
 
 
-    private String ApiUrl = "http://192.168.109.128:3000/api/";
+    // private String ApiUrl = "http://192.168.109.128:3000/api/";
+    private String ApiUrl = "http://agglo.mooo.com:4000/api/";
+
     private int ApiVersion = 1;
 
     public static UserCollection getInstance() {
@@ -92,18 +94,8 @@ public class UserCollection implements IAsyncResponse<RestCommand> {
     }
 
     public void updateUser(User user) {
-        JSONObject userJson = new JSONObject();
-        try {
-            userJson.put("firstname", user.getFirstName());
-            userJson.put("lastname", user.getLastName());
-            userJson.put("email", user.geteMail());
-            userJson.put("username", user.getUserName());
-            userJson.put("password", user.getPassword());
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
         AsyncApiAccess asyncApiAccess = new AsyncApiAccess(this);
-        RestCommand restCommand = new RestCommand(RestMethod.UPDATE, ApiUrl + "v" + ApiVersion + "/users/" + user.getId(),  userJson.toString());
+        RestCommand restCommand = new RestCommand(RestMethod.UPDATE, ApiUrl + "v" + ApiVersion + "/users/" + user.getId(),  user.getItemAsJsonObject().toString());
         asyncApiAccess.execute(restCommand);
     }
 
@@ -124,13 +116,9 @@ public class UserCollection implements IAsyncResponse<RestCommand> {
                 try {
                     JSONArray usersJson = new JSONArray((String) restCommand.getResult());
                     for (int i = 0; i < usersJson.length(); i++) {
-                        JSONObject e = usersJson.getJSONObject(i);
-                        users.add(new User(e.getInt("id"),
-                                e.getString("firstname"),
-                                e.getString("lastname"),
-                                e.getString("username"),
-                                e.getString("password"),
-                                e.getString("email")));
+                        User itemToAdd = new User();
+                        itemToAdd.applyJsonObject(usersJson.getJSONObject(i));
+                        users.add(itemToAdd);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -139,16 +127,12 @@ public class UserCollection implements IAsyncResponse<RestCommand> {
             case CREATE:
                 try {
                     JSONObject newUserJson = new JSONObject((String) restCommand.getResult());
-                    users.add(new User(newUserJson.getInt("id"),
-                            newUserJson.getString("firstname"),
-                            newUserJson.getString("lastname"),
-                            newUserJson.getString("username"),
-                            newUserJson.getString("password"),
-                            newUserJson.getString("email")));
+                    User itemToAdd = new User();
+                    itemToAdd.applyJsonObject(newUserJson);
+                    users.add(itemToAdd);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                //System.out.println("User added!");
                 break;
             case DELETE:
                 if (restCommand.getStatusCode() == 204) {
@@ -161,11 +145,7 @@ public class UserCollection implements IAsyncResponse<RestCommand> {
 
                     for(User user : users) {
                         if(user.getId() == updatedUserJson.getInt("id")) {
-                            user.setFirstName(updatedUserJson.getString("firstname"));
-                            user.setLastName(updatedUserJson.getString("lastname"));
-                            user.setUserName(updatedUserJson.getString("username"));
-                            user.setPassword(updatedUserJson.getString("password"));
-                            user.seteMail(updatedUserJson.getString("email"));
+                            user.applyJsonObject(updatedUserJson);
                         }
                     }
                 } catch (JSONException e) {

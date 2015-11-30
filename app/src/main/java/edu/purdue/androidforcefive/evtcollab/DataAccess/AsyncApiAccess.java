@@ -9,6 +9,7 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import edu.purdue.androidforcefive.evtcollab.Controller.LogonController;
 import edu.purdue.androidforcefive.evtcollab.DataAccess.Enums.RestMethod;
 import edu.purdue.androidforcefive.evtcollab.DataAccess.Interfaces.IAsyncResponse;
 
@@ -30,6 +31,7 @@ public class AsyncApiAccess extends AsyncTask<RestCommand, Void, Void> {
             restCommand = params[0];
             URL url = new URL(params[0].getUrl());
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            //connection.addRequestProperty("Authorization", "Token token=" + LogonController.getInstance().getToken());
 
             if(restCommand.getRestMethod() == RestMethod.UPDATE) {
                 connection.setDoOutput(true);

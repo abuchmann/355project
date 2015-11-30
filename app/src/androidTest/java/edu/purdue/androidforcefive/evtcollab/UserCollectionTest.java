@@ -54,11 +54,7 @@ public class UserCollectionTest extends InstrumentationTestCase implements IData
 
         for (User user : UserCollection.getInstance().getUsers()) {
             System.out.println(user.getId() + " " + user.getLastName());
-            if (user.getFirstName().equals(testUser.getFirstName()) &&
-                    user.getLastName().equals(testUser.getLastName()) &&
-                    user.getUserName().equals(testUser.getUserName()) &&
-                    user.getPassword().equals(testUser.getPassword()) &&
-                    user.geteMail().equals(testUser.geteMail()) &&
+            if (user.contentEquals(testUser) &&
                     user.getId() != 0) {
                 testUser = user;
             }
@@ -67,13 +63,14 @@ public class UserCollectionTest extends InstrumentationTestCase implements IData
         System.out.println("Semaphore status: " + semaphore.availablePermits());
 
         testUser.setFirstName("Lord");
+        testUser.addPermissionToAccessCalendar(1);
         testUser.save();
 
         semaphore.tryAcquire(10, TimeUnit.SECONDS);
         for (User user : UserCollection.getInstance().getUsers()) {
             System.out.println(user.getId() + " " + user.getLastName());
             if (user.getId() == testUser.getId()) {
-                assertEquals(user.getFirstName(), "Lord");
+                assertTrue(user.contentEquals(testUser));
             }
         }
 

@@ -26,7 +26,9 @@ public class CalendarCollection implements IAsyncResponse<RestCommand> {
     private RestCommand currentCommand;
 
 
-    private String ApiUrl = "http://192.168.109.128:3000/api/";
+    // private String ApiUrl = "http://192.168.109.128:3000/api/";
+    private String ApiUrl = "http://agglo.mooo.com:4000/api/";
+
     private int ApiVersion = 1;
 
     public static CalendarCollection getInstance() {
@@ -59,15 +61,8 @@ public class CalendarCollection implements IAsyncResponse<RestCommand> {
     }
 
     public void addCalendar(Calendar calendar) {
-        JSONObject calendarJson = new JSONObject();
-        try {
-            calendarJson.put("name", calendar.getName());
-            calendarJson.put("description", calendar.getDescription());
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
         AsyncApiAccess asyncApiAccess1 = new AsyncApiAccess(this);
-        asyncApiAccess1.execute(new RestCommand(RestMethod.CREATE, ApiUrl + "v" + ApiVersion + "/calendars", calendarJson.toString()));
+        asyncApiAccess1.execute(new RestCommand(RestMethod.CREATE, ApiUrl + "v" + ApiVersion + "/calendars", calendar.getItemAsJsonObject().toString()));
     }
 
 
@@ -89,15 +84,8 @@ public class CalendarCollection implements IAsyncResponse<RestCommand> {
     }
 
     public void updateCalendar(Calendar calendar) {
-        JSONObject calendarJson = new JSONObject();
-        try {
-            calendarJson.put("name", calendar.getName());
-            calendarJson.put("description", calendar.getDescription());
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
         AsyncApiAccess asyncApiAccess = new AsyncApiAccess(this);
-        RestCommand restCommand = new RestCommand(RestMethod.UPDATE, ApiUrl + "v" + ApiVersion + "/calendars/" + calendar.getId(),  calendarJson.toString());
+        RestCommand restCommand = new RestCommand(RestMethod.UPDATE, ApiUrl + "v" + ApiVersion + "/calendars/" + calendar.getId(),  calendar.getItemAsJsonObject().toString());
         asyncApiAccess.execute(restCommand);
     }
 
@@ -148,8 +136,7 @@ public class CalendarCollection implements IAsyncResponse<RestCommand> {
 
                     for(Calendar calendar : calendars) {
                         if(calendar.getId() == updatedCalendarJson.getInt("id")) {
-                            calendar.setName(updatedCalendarJson.getString("name"));
-                            calendar.setDescription(updatedCalendarJson.getString("description"));
+                            calendar.applyJsonObject(updatedCalendarJson);
                         }
                     }
                 } catch (JSONException e) {
