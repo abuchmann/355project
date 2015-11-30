@@ -4,20 +4,66 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import edu.purdue.androidforcefive.evtcollab.BusinessObjects.User;
+import edu.purdue.androidforcefive.evtcollab.DataCollections.Interfaces.IDataCollectionChanged;
+import edu.purdue.androidforcefive.evtcollab.DataCollections.UserCollection;
 
-public class MainActivity extends AppCompatActivity {
+
+public class MainActivity extends AppCompatActivity implements IDataCollectionChanged {
 
     private TextView textView;
+    private User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        /*
+            Add yourself as a listener, that means after every change of the collection, you get notified via the onCollectionChanged method
+         */
+        UserCollection.getInstance().addListener(this);
         setContentView(R.layout.activity_main);
-        Button btn = (Button) findViewById(R.id.button);
+        Button btn = (Button) findViewById(R.id.btnDownload);
         textView = (TextView) findViewById(R.id.textView);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                UserCollection.getInstance().initializeUsers();
+            }
+        });
+
+
+        Button btn2 = (Button) findViewById(R.id.btnAdd);
+        btn2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                user = new User() {{
+                    firstName = "test";
+                    lastName = "test";
+                    userName = "testUsername";
+                    password = "testPassword";
+                    eMail = "email";
+                }};
+                user.save();
+
+            }
+        });
+
+        Button btnDelete = (Button) findViewById(R.id.btnDelete);
+        btnDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                for (User user : UserCollection.getInstance().getUsers()) {
+                    if(user.getUserName().equals("testUsername"))
+                        user.destroy();
+                }
+            }
+        });
+
+
     }
 
     /*Test comment*/
@@ -42,5 +88,14 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onCollectionChanged() {
+        String temp = "";
+        for (User user : UserCollection.getInstance().getUsers()) {
+            temp += user.getId() + " " + user.getFirstName() + " " + user.getLastName() + "\n";
+        }
+        textView.setText(temp);
     }
 }
