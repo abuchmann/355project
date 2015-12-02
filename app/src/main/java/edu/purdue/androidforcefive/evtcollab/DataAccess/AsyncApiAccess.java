@@ -97,7 +97,7 @@ public class AsyncApiAccess extends AsyncTask<RestCommand, Void, Void> {
 
 
         } catch (IOException e) {
-            e.printStackTrace();
+            restCommand.setException(e);
         }
 
         return null;

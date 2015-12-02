@@ -103,6 +103,13 @@ public class EventCollection implements IAsyncResponse<RestCommand> {
 
     @Override
     public void onTaskCompleted(RestCommand restCommand) {
+        if(restCommand.getException() != null) {
+            try {
+                throw restCommand.getException();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
         switch (restCommand.getRestMethod()) {
             case INDEX:
                 try {

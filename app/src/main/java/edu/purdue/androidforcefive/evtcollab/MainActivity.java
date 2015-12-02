@@ -1,5 +1,6 @@
 package edu.purdue.androidforcefive.evtcollab;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -60,6 +61,16 @@ public class MainActivity extends AppCompatActivity implements IDataCollectionCh
                     if(user.getUserName().equals("testUsername"))
                         user.destroy();
                 }
+            }
+        });
+
+        Button btnStartCalendar = (Button) findViewById(R.id.btnStartCalendar);
+        btnStartCalendar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent calendarView = new Intent(MainActivity.this, CalendarActivity.class);
+                startActivity(calendarView);
+
             }
         });
 

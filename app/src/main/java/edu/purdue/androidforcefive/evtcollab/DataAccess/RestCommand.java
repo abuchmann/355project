@@ -11,6 +11,7 @@ public class RestCommand {
     private String data;
     private Object result;
     private int statusCode;
+    private Exception exception;
 
     public RestCommand(RestMethod restMethod, String url, String data) {
         this.restMethod = restMethod;
@@ -49,5 +50,13 @@ public class RestCommand {
 
     public void setStatusCode(int statusCode) {
         this.statusCode = statusCode;
+    }
+
+    public Exception getException() {
+        return exception;
+    }
+
+    public void setException(Exception exception) {
+        this.exception = exception;
     }
 }
