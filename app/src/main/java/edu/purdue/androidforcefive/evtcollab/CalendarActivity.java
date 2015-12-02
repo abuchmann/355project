@@ -6,9 +6,11 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CalendarView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import edu.purdue.androidforcefive.evtcollab.BusinessObjects.Event;
 import edu.purdue.androidforcefive.evtcollab.DataCollections.EventCollection;
@@ -49,6 +51,13 @@ public class CalendarActivity extends AppCompatActivity implements IDataCollecti
     public void onCollectionChanged() {
         eventArrayAdapter = new EventDataAdapter(this,EventCollection.getInstance().getEvents().toArray(new Event[0]));
         ListView listView = (ListView) findViewById(R.id.listView);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(CalendarActivity.this, eventArrayAdapter.getItem(position).getId() + " " + eventArrayAdapter.getItem(position).getTitle() , Toast.LENGTH_SHORT).show();
+            }
+        });
         listView.setAdapter(eventArrayAdapter);
     }
 }

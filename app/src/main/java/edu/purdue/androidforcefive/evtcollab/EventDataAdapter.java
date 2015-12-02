@@ -5,11 +5,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import java.lang.reflect.Array;
 
 import edu.purdue.androidforcefive.evtcollab.BusinessObjects.Event;
 
@@ -36,8 +33,8 @@ public class EventDataAdapter extends ArrayAdapter<Event> {
 
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View rowView = inflater.inflate(R.layout.custom_event_list, parent, false);
-        TextView textViewFirstLine = (TextView) rowView.findViewById(R.id.firstLine);
-        TextView textViewSecondLine = (TextView) rowView.findViewById(R.id.secondLine);
+        TextView textViewFirstLine = (TextView) rowView.findViewById(R.id.eventName);
+        TextView textViewSecondLine = (TextView) rowView.findViewById(R.id.description);
         ImageView imageView = (ImageView) rowView.findViewById(R.id.icon);
         textViewFirstLine.setText(events[position].getTitle());
         textViewSecondLine.setText(events[position].getStartTime().toString());
