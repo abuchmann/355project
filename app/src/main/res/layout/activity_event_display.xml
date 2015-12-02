@@ -1,0 +1,123 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="edu.purdue.androidforcefive.evtcollab.EventDisplayActivity"
+    android:background="#81aeff"
+    android:id="@+id/EventDisplayLayout">
+
+    <TextView android:text="Title" android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/LabelTitle"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:textSize="25dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Description"
+        android:id="@+id/LabelDescription"
+        android:textSize="25dp"
+        android:layout_marginTop="37dp"
+        android:layout_below="@+id/LabelTitle"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Title Here"
+        android:id="@+id/TitleText"
+        android:layout_below="@+id/LabelTitle"
+        android:layout_toRightOf="@+id/LabelTitle"
+        android:layout_toEndOf="@+id/LabelTitle"
+        android:textSize="20dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Location"
+        android:id="@+id/labelLocation"
+        android:layout_below="@+id/LabelDescription"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="86dp"
+        android:textSize="25dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Description Here"
+        android:id="@+id/DescriptionText"
+        android:layout_below="@+id/LabelDescription"
+        android:layout_toRightOf="@+id/LabelTitle"
+        android:layout_toEndOf="@+id/LabelTitle"
+        android:textSize="20dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Location Here"
+        android:id="@+id/LocationText"
+        android:textSize="20dp"
+        android:layout_below="@+id/labelLocation"
+        android:layout_alignLeft="@+id/DescriptionText"
+        android:layout_alignStart="@+id/DescriptionText" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="StartTimeHere"
+        android:id="@+id/textView2"
+        android:layout_below="@+id/LocationText"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="36dp"
+        android:textSize="20dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="to"
+        android:id="@+id/labelTo"
+        android:layout_alignBottom="@+id/textView2"
+        android:layout_toRightOf="@+id/TitleText"
+        android:layout_toEndOf="@+id/TitleText" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="EndTimeHere"
+        android:id="@+id/textView3"
+        android:textIsSelectable="false"
+        android:textSize="20dp"
+        android:layout_alignBottom="@+id/labelTo"
+        android:layout_toRightOf="@+id/LocationText"
+        android:layout_toEndOf="@+id/LocationText" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Delete"
+        android:id="@+id/buttonDelete"
+        android:layout_marginTop="62dp"
+        android:background="#ff0c12"
+        android:layout_below="@+id/textView3"
+        android:layout_alignRight="@+id/textView3"
+        android:layout_alignEnd="@+id/textView3" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="I&apos;m Going!"
+        android:id="@+id/buttonGoing"
+        android:background="#42ff6e"
+        android:layout_alignTop="@+id/buttonDelete"
+        android:layout_alignRight="@+id/LabelDescription"
+        android:layout_alignEnd="@+id/LabelDescription" />
+
+</RelativeLayout>
