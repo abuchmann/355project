@@ -1,5 +1,6 @@
 package edu.purdue.androidforcefive.evtcollab;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -12,6 +13,8 @@ import android.widget.CalendarView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.util.Date;
+
 import edu.purdue.androidforcefive.evtcollab.BusinessObjects.Event;
 import edu.purdue.androidforcefive.evtcollab.DataCollections.EventCollection;
 import edu.purdue.androidforcefive.evtcollab.DataCollections.Interfaces.IDataCollectionChanged;
@@ -20,6 +23,7 @@ public class CalendarActivity extends AppCompatActivity implements IDataCollecti
 
     private CalendarView calendarView;
     private EventDataAdapter eventArrayAdapter;
+    private Date selectedDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +33,12 @@ public class CalendarActivity extends AppCompatActivity implements IDataCollecti
         EventCollection.getInstance().initializeEvents();
 
         calendarView = (CalendarView) findViewById(R.id.calendarView);
+        calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+            @Override
+            public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
 
+            }
+        });
 
 
 
@@ -45,6 +54,10 @@ public class CalendarActivity extends AppCompatActivity implements IDataCollecti
                         .setAction("Action", null).show();
             }
         });
+    }
+
+    private void setCurrentEvents() {
+
     }
 
     @Override
