@@ -7,6 +7,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -18,7 +19,7 @@ import edu.purdue.androidforcefive.evtcollab.DataCollections.EventCollection;
 /**
  * Created by abuchmann on 20.11.2015.
  */
-public class Event extends SuperItem {
+public class Event extends SuperItem implements Serializable {
 
     protected int associatedCalendar;
     protected String title;
