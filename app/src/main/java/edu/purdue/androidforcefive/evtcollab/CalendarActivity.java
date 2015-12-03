@@ -33,12 +33,12 @@ public class CalendarActivity extends AppCompatActivity implements IDataCollecti
         EventCollection.getInstance().initializeEvents();
 
         calendarView = (CalendarView) findViewById(R.id.calendarView);
-        calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
-            @Override
-            public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
-
-            }
-        });
+//        calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+//            @Override
+//            public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
+//
+//            }
+//        });
 
 
 
@@ -70,6 +70,7 @@ public class CalendarActivity extends AppCompatActivity implements IDataCollecti
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Toast.makeText(CalendarActivity.this, eventArrayAdapter.getItem(position).getId() + " " + eventArrayAdapter.getItem(position).getTitle() , Toast.LENGTH_SHORT).show();
                 Intent eventDisplay = new Intent(getApplicationContext(), EventDisplayActivity.class);
+                Event test = eventArrayAdapter.getItem(position);
                 eventDisplay.putExtra("event", eventArrayAdapter.getItem(position));
                 startActivity(eventDisplay);
             }

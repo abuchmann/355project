@@ -13,6 +13,7 @@ import edu.purdue.androidforcefive.evtcollab.DataAccess.AsyncApiAccess;
 import edu.purdue.androidforcefive.evtcollab.DataAccess.Enums.RestMethod;
 import edu.purdue.androidforcefive.evtcollab.DataAccess.Interfaces.IAsyncResponse;
 import edu.purdue.androidforcefive.evtcollab.DataAccess.RestCommand;
+import edu.purdue.androidforcefive.evtcollab.DataCollections.Filter.EventFilter;
 import edu.purdue.androidforcefive.evtcollab.DataCollections.Interfaces.IDataCollectionChanged;
 
 /**
@@ -48,6 +49,16 @@ public class EventCollection implements IAsyncResponse<RestCommand> {
 
     public List<Event> getEvents() {
         //System.out.println(events.size());
+        return events;
+
+    }
+
+    public List<Event> getEvents(EventFilter filter) {
+        //System.out.println(events.size());
+        List<Event> filteredEvents;
+        for(Event event : events) {
+
+        }
         return events;
 
     }

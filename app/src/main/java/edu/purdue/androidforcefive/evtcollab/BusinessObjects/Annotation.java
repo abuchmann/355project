@@ -19,6 +19,7 @@ public class Annotation extends SuperItem {
     protected String message;
     protected Date createdAt;
     protected int authorId;
+    protected String author;
     protected int eventId;
 
     private final DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'" );
@@ -59,6 +60,14 @@ public class Annotation extends SuperItem {
 
     public void setEventId(int postId) {
         this.eventId = postId;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
     }
 
     @Override
