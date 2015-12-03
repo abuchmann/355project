@@ -13,8 +13,9 @@
         android:id="@+id/LabelTitle"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:textSize="25dp" />
+        android:layout_alignParentStart="false"
+        android:textSize="25dp"
+        android:textColor="#3727ff" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -25,38 +26,38 @@
         android:layout_marginTop="37dp"
         android:layout_below="@+id/LabelTitle"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:textColor="#2e41ff" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Title Here"
         android:id="@+id/TitleText"
-        android:layout_below="@+id/LabelTitle"
-        android:layout_toRightOf="@+id/LabelTitle"
-        android:layout_toEndOf="@+id/LabelTitle"
-        android:textSize="20dp" />
+        android:textSize="20dp"
+        android:layout_below="@+id/LabelTitle" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Location"
         android:id="@+id/labelLocation"
-        android:layout_below="@+id/LabelDescription"
+        android:layout_marginTop="21dp"
+        android:textSize="25dp"
+        android:layout_below="@+id/DescriptionText"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="86dp"
-        android:textSize="25dp" />
+        android:textColor="#283fff" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Description Here"
         android:id="@+id/DescriptionText"
+        android:textSize="20dp"
         android:layout_below="@+id/LabelDescription"
-        android:layout_toRightOf="@+id/LabelTitle"
-        android:layout_toEndOf="@+id/LabelTitle"
-        android:textSize="20dp" />
+        android:layout_alignLeft="@+id/TitleText"
+        android:layout_alignStart="@+id/TitleText" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -72,52 +73,36 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="StartTimeHere"
-        android:id="@+id/textView2"
+        android:id="@+id/TextStartTime"
+        android:textSize="20dp"
         android:layout_below="@+id/LocationText"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="36dp"
-        android:textSize="20dp" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="to"
-        android:id="@+id/labelTo"
-        android:layout_alignBottom="@+id/textView2"
-        android:layout_toRightOf="@+id/TitleText"
-        android:layout_toEndOf="@+id/TitleText" />
+        android:layout_marginTop="38dp"
+        android:layout_alignRight="@+id/LocationText"
+        android:layout_alignEnd="@+id/LocationText" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="EndTimeHere"
-        android:id="@+id/textView3"
+        android:id="@+id/TextEndTime"
         android:textIsSelectable="false"
         android:textSize="20dp"
-        android:layout_alignBottom="@+id/labelTo"
-        android:layout_toRightOf="@+id/LocationText"
-        android:layout_toEndOf="@+id/LocationText" />
+        android:layout_alignTop="@+id/TextStartTime"
+        android:layout_toRightOf="@+id/DescriptionText"
+        android:layout_toEndOf="@+id/DescriptionText"
+        android:layout_marginLeft="33dp"
+        android:layout_marginStart="33dp" />
 
-    <Button
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Delete"
-        android:id="@+id/buttonDelete"
-        android:layout_marginTop="62dp"
-        android:background="#ff0c12"
-        android:layout_below="@+id/textView3"
-        android:layout_alignRight="@+id/textView3"
-        android:layout_alignEnd="@+id/textView3" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="I&apos;m Going!"
-        android:id="@+id/buttonGoing"
-        android:background="#42ff6e"
-        android:layout_alignTop="@+id/buttonDelete"
-        android:layout_alignRight="@+id/LabelDescription"
-        android:layout_alignEnd="@+id/LabelDescription" />
+        android:text="to"
+        android:id="@+id/textView2"
+        android:layout_alignBottom="@+id/TextEndTime"
+        android:layout_toLeftOf="@+id/TextEndTime"
+        android:layout_toStartOf="@+id/TextEndTime"
+        android:textColor="#2c45ff" />
 
 </RelativeLayout>

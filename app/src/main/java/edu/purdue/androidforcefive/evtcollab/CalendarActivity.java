@@ -1,5 +1,6 @@
 package edu.purdue.androidforcefive.evtcollab;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -56,6 +57,9 @@ public class CalendarActivity extends AppCompatActivity implements IDataCollecti
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Toast.makeText(CalendarActivity.this, eventArrayAdapter.getItem(position).getId() + " " + eventArrayAdapter.getItem(position).getTitle() , Toast.LENGTH_SHORT).show();
+                Intent eventDisplay = new Intent(getApplicationContext(), EventDisplayActivity.class);
+                eventDisplay.putExtra("event", eventArrayAdapter.getItem(position));
+                startActivity(eventDisplay);
             }
         });
         listView.setAdapter(eventArrayAdapter);

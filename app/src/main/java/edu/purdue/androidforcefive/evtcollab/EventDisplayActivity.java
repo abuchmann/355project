@@ -4,13 +4,30 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
+
+import edu.purdue.androidforcefive.evtcollab.BusinessObjects.Event;
 
 public class EventDisplayActivity extends AppCompatActivity {
 
+    private Event event;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_display);
+        event =(Event) getIntent().getSerializableExtra("event");
+
+        ((TextView) findViewById(R.id.TitleText)).setText(event.getTitle());
+
+        ((TextView) findViewById(R.id.DescriptionText)).setText(event.getDescription());
+
+        ((TextView) findViewById(R.id.LocationText)).setText(event.getLocation());
+
+        ((TextView) findViewById(R.id.TextStartTime)).setText(event.getStartTime().toString());
+
+        ((TextView) findViewById(R.id.TextEndTime)).setText(event.getEndTime().toString());
+
+
     }
 
     @Override
