@@ -27,7 +27,8 @@
         </activity>
         <activity
             android:name=".EventDisplayActivity"
-            android:label="@string/title_activity_event_display" >
+            android:label="@string/title_activity_event_display"
+            android:windowSoftInputMode="adjustPan">
         </activity>
     </application>
 

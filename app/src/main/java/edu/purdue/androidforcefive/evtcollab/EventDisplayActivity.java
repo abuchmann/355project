@@ -4,9 +4,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,6 +26,7 @@ import edu.purdue.androidforcefive.evtcollab.DataCollections.UserCollection;
 public class EventDisplayActivity extends AppCompatActivity implements IDataCollectionChanged {
 
     private Event event;
+    private DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,8 +41,24 @@ public class EventDisplayActivity extends AppCompatActivity implements IDataColl
         ((TextView) findViewById(R.id.TitleText)).setText(event.getTitle());
         ((TextView) findViewById(R.id.DescriptionText)).setText(event.getDescription());
         ((TextView) findViewById(R.id.LocationText)).setText(event.getLocation());
-        ((TextView) findViewById(R.id.TextStartTime)).setText(event.getStartTime().toString());
-        ((TextView) findViewById(R.id.TextEndTime)).setText(event.getEndTime().toString());
+        ((TextView) findViewById(R.id.TextStartTime)).setText(dateFormat.format(event.getStartTime()));
+        ((TextView) findViewById(R.id.TextEndTime)).setText(dateFormat.format(event.getEndTime()));
+
+        Button sendAnnotation = (Button) findViewById(R.id.btnAnnotationSend);
+        final EditText txtAnnotation = (EditText) findViewById(R.id.txtAddAnnotation);
+        sendAnnotation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(!txtAnnotation.getText().equals(""))
+                AnnotationCollection.getInstance().addAnnotation(
+                        new Annotation() {{
+                            message = txtAnnotation.getText().toString();
+                            authorId = 1;
+                            eventId = event.getId();
+                        }}
+                );
+            }
+        });
     }
 
     @Override
