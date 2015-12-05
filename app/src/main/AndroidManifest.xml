@@ -28,7 +28,11 @@
         <activity
             android:name=".EventDisplayActivity"
             android:label="@string/title_activity_event_display"
-            android:windowSoftInputMode="adjustPan">
+            android:windowSoftInputMode="adjustPan" >
+        </activity>
+        <activity
+            android:name=".EventCreationActivity"
+            android:label="@string/title_activity_event_creation" >
         </activity>
     </application>
 

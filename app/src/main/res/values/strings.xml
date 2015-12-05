@@ -4,4 +4,5 @@
     <string name="title_activity_event_display">EventDisplayActivity</string>
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_calendar">CalendarActivity</string>
+    <string name="title_activity_event_creation">EventCreationActivity</string>
 </resources>
