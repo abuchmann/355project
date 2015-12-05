@@ -1,11 +1,14 @@
 package edu.purdue.androidforcefive.evtcollab;
 
+import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -16,6 +19,7 @@ import android.widget.Toast;
 import java.util.Date;
 
 import edu.purdue.androidforcefive.evtcollab.BusinessObjects.Event;
+import edu.purdue.androidforcefive.evtcollab.Controller.LogonController;
 import edu.purdue.androidforcefive.evtcollab.DataCollections.EventCollection;
 import edu.purdue.androidforcefive.evtcollab.DataCollections.Interfaces.IDataCollectionChanged;
 
@@ -28,9 +32,12 @@ public class CalendarActivity extends AppCompatActivity implements IDataCollecti
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
+        this.getActionBar();
 
         EventCollection.getInstance().addListener(this);
         EventCollection.getInstance().initializeEvents();
+
 
         calendarView = (CalendarView) findViewById(R.id.calendarView);
 //        calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
@@ -39,6 +46,8 @@ public class CalendarActivity extends AppCompatActivity implements IDataCollecti
 //
 //            }
 //        });
+
+
 
 
 
@@ -55,6 +64,19 @@ public class CalendarActivity extends AppCompatActivity implements IDataCollecti
             }
         });
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_settings:
+                Intent intent = new Intent(this, SettingsActivity.class);
+                startActivity(intent);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+
 
     private void setCurrentEvents() {
 
