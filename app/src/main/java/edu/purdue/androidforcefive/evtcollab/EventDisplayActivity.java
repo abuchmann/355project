@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import java.text.DateFormat;
@@ -104,6 +105,12 @@ public class EventDisplayActivity extends AppCompatActivity implements IDataColl
             AnnotationDataAdapter annotationDataAdapter = new AnnotationDataAdapter(this, annotationsToDisplay.toArray(new Annotation[0]));
             ListView list = (ListView) findViewById(R.id.listView2);
             list.setAdapter(annotationDataAdapter);
+            ((ScrollView) findViewById(R.id.scrollView2)).post(new Runnable() {
+                @Override
+                public void run() {
+                    ((ScrollView) findViewById(R.id.scrollView2)).fullScroll(View.FOCUS_DOWN);
+                }
+            });
         }
     }
 }

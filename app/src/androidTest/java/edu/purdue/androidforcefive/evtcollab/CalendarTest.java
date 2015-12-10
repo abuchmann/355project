@@ -11,12 +11,12 @@ public class CalendarTest extends InstrumentationTestCase {
     public void testContentEquals() {
         Calendar testCalendar1 = new Calendar() {{
             name = "Shared Testcalendar";
-            description = "This is the description of the shared calendar";
+            description = "This is the description of the shared calendarEventStart";
         }};
 
         Calendar testCalendar2 = new Calendar() {{
             name = "Shared Testcalendar";
-            description = "This is the description of the shared calendar";
+            description = "This is the description of the shared calendarEventStart";
         }};
 
         assertTrue(testCalendar1.contentEquals(testCalendar2));

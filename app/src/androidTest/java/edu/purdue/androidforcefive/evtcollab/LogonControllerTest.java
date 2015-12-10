@@ -11,6 +11,6 @@ public class LogonControllerTest extends InstrumentationTestCase {
     public void testLogin()
     {
         LogonController.getInstance().login("abuchmann", "testpassword");
-        System.out.println(LogonController.getInstance().getToken());
+        //System.out.println(LogonController.getInstance().getToken());
     }
 }

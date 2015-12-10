@@ -125,6 +125,7 @@ public class EventCollection implements IAsyncResponse<RestCommand> {
             case INDEX:
                 try {
                     JSONArray eventsJson = new JSONArray((String) restCommand.getResult());
+                    events.clear();
                     for (int i = 0; i < eventsJson.length(); i++) {
                         JSONObject e = eventsJson.getJSONObject(i);
                         Event itemToAdd = new Event();

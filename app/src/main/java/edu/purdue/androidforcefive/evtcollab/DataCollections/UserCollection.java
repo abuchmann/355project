@@ -6,6 +6,9 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 import edu.purdue.androidforcefive.evtcollab.BusinessObjects.User;
 import edu.purdue.androidforcefive.evtcollab.DataAccess.AsyncApiAccess;
@@ -83,7 +86,27 @@ public class UserCollection implements IAsyncResponse<RestCommand> {
 
     public void refreshUsers() {
         AsyncApiAccess asyncApiAccess = new AsyncApiAccess(this);
-        asyncApiAccess.execute(new RestCommand(RestMethod.INDEX, ApiUrl + "v" + ApiVersion + "/users"));
+        try {
+            RestCommand restCommand = new RestCommand(RestMethod.INDEX, ApiUrl + "v" + ApiVersion + "/users");
+            asyncApiAccess.execute(restCommand).get(5, TimeUnit.SECONDS);
+            System.out.println(restCommand.getResult());
+            JSONArray usersJson = new JSONArray((String) restCommand.getResult());
+            for (int i = 0; i < usersJson.length(); i++) {
+                User itemToAdd = new User();
+                itemToAdd.applyJsonObject(usersJson.getJSONObject(i));
+                users.add(itemToAdd);
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (TimeoutException e) {
+            e.printStackTrace();
+        }
+
+
     }
 
     public void destroyUser(User user) {

@@ -36,10 +36,10 @@ public class CalendarCollectionTest extends InstrumentationTestCase implements I
     @Test
     public void testAddAndRemoveCalendar() throws InterruptedException {
         LogonController.getInstance().login("abuchmann", "testpassword");
-        System.out.println(LogonController.getInstance().getToken());
+        //System.out.println(LogonController.getInstance().getToken());
         Calendar testCalendar = new Calendar() {{
             name = "Shared Testcalendar";
-            description = "This is the description of the shared calendar";
+            description = "This is the description of the shared calendarEventStart";
             ownerId = 2;
         }};
 
@@ -53,7 +53,7 @@ public class CalendarCollectionTest extends InstrumentationTestCase implements I
         semaphore.tryAcquire(10, TimeUnit.SECONDS);
         CalendarCollection.getInstance().addCalendar(testCalendar);
 
-        // Let's wait for the calendar to be added and the semaphore to be released
+        // Let's wait for the calendarEventStart to be added and the semaphore to be released
         semaphore.tryAcquire(10, TimeUnit.SECONDS);
 
 

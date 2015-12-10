@@ -1,10 +1,115 @@
-<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/EventCreationLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#81aeff"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="edu.purdue.androidforcefive.evtcollab.EventCreateActivity">
+    tools:context="edu.purdue.androidforcefive.evtcollab.EventCreationActivity">
+
+    <EditText
+        android:id="@+id/txtEventTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentStart="true"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Title" />
+
+    <EditText
+        android:id="@+id/txtEventLocation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/txtEventDescription"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignRight="@+id/txtEventDescription"
+        android:layout_below="@+id/txtEventTitle"
+        android:layout_marginTop="62dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Location" />
+
+    <EditText
+        android:id="@+id/txtEventDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/txtEventTitle"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignRight="@+id/txtEventTitle"
+        android:layout_below="@+id/txtEventTitle"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Description" />
+
+    <EditText
+        android:id="@+id/txtStartTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/txtEndTime"
+        android:layout_alignStart="@+id/txtEndTime"
+        android:layout_below="@+id/txtEventLocation"
+        android:layout_marginTop="29dp"
+        android:editable="false"
+        android:ems="10"
+        android:focusableInTouchMode="false"
+        android:inputType="time"
+        android:text="Start Time" />
+
+    <EditText
+        android:id="@+id/txtEndTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/txtStartTime"
+        android:editable="false"
+        android:ems="10"
+        android:focusableInTouchMode="false"
+        android:inputType="time"
+        android:text="End Time" />
+
+    <Button
+        android:id="@+id/btnCreateEvent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/txtEndTime"
+        android:layout_alignRight="@+id/txtEndTime"
+        android:layout_below="@+id/txtEndTime"
+        android:layout_marginTop="77dp"
+        android:text="Create" />
+
+    <EditText
+        android:id="@+id/txtStartDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/txtEndTime"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_toLeftOf="@+id/txtStartTime"
+        android:clickable="true"
+        android:editable="false"
+        android:elegantTextHeight="false"
+        android:focusableInTouchMode="false"
+        android:text="Date" />
+
+    <EditText
+        android:id="@+id/txtEndDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/txtStartTime"
+        android:layout_toLeftOf="@+id/txtStartTime"
+        android:editable="false"
+        android:focusableInTouchMode="false"
+        android:text="Date" />
 
 </RelativeLayout>

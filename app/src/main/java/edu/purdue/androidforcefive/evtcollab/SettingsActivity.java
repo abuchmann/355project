@@ -10,7 +10,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import edu.purdue.androidforcefive.evtcollab.Controller.LogonController;
 import edu.purdue.androidforcefive.evtcollab.R;
 
 public class SettingsActivity extends AppCompatActivity {
@@ -29,9 +31,8 @@ public class SettingsActivity extends AppCompatActivity {
         txtPassword = (TextView) findViewById(R.id.txtPassword);
 
 
-
-            txtUsername.setText(mPreferences.getString("username", ""));
-            txtPassword.setText(mPreferences.getString("password", ""));
+        txtUsername.setText(mPreferences.getString("username", ""));
+        txtPassword.setText(mPreferences.getString("password", ""));
 
 
         setSupportActionBar(toolbar);
@@ -39,11 +40,16 @@ public class SettingsActivity extends AppCompatActivity {
         ((Button) findViewById(R.id.btnSaveSettings)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SharedPreferences.Editor edit = mPreferences.edit();
-                edit.clear();
-                edit.putString("username", txtUsername.getText().toString());
-                edit.putString("password", txtPassword.getText().toString());
-                edit.commit();
+                if (LogonController.getInstance().checkCredentialValidity(txtUsername.getText().toString(), txtPassword.getText().toString())) {
+                    SharedPreferences.Editor edit = mPreferences.edit();
+                    edit.clear();
+                    edit.putString("username", txtUsername.getText().toString());
+                    edit.putString("password", txtPassword.getText().toString());
+                    edit.commit();
+                    Toast.makeText(SettingsActivity.this, "Account saved.", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(SettingsActivity.this, "Invalid credentials", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
